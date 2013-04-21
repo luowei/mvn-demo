@@ -1,9 +1,8 @@
 package com.rootls.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -61,6 +60,17 @@ public class Permission {
 
     public void setPermissionGroupId(Integer permissionGroupId) {
         this.permissionGroupId = permissionGroupId;
+    }
+
+    private Set<Role> roles = new HashSet<Role>();
+
+    @ManyToMany(mappedBy = "permissions")
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> users) {
+        this.roles = roles;
     }
 
     @Override

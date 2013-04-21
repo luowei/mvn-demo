@@ -1,10 +1,9 @@
 package com.rootls.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -63,6 +62,32 @@ public class Role {
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
+
+    private Set<User> users = new HashSet<User>();
+
+    @ManyToMany(mappedBy = "roles")
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    private Set<Permission> permissions = new HashSet<Permission>();
+
+    @ManyToMany
+    @JoinTable(name = "roles_permission",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id",referencedColumnName = "id"))
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
 
     @Override
     public boolean equals(Object o) {
